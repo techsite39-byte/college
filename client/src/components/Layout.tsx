@@ -106,9 +106,12 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
         <div className="college-header__main">
           <div className="college-header__main-inner">
             <Link to="/" aria-label="Sri Aurobindo College of Education home" className="college-header__brand">
-              <span aria-hidden="true" className="college-header__monogram">SA</span>
+              <img src="/logo%20(1).png" alt="" className="college-header__monogram" />
               <span className="college-header__brand-copy">
-                <span className="college-header__brand-name">Sri Aurobindo College</span>
+                <span className="college-header__brand-name">
+                  <span>Sri Aurobindo</span>
+                  <span>College</span>
+                </span>
                 <span className="college-header__brand-subtitle">D.Ed &amp; B.Ed <span aria-hidden="true">|</span> Nalgonda, Telangana</span>
               </span>
             </Link>
@@ -253,7 +256,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
         <div className="section-shell college-footer__main">
           <section className="college-footer__brand" aria-labelledby="college-footer-title">
             <Link to="/" className="college-footer__identity" aria-label="Sri Aurobindo College of Education home">
-              <span className="college-footer__seal" aria-hidden="true">SA</span>
+              <img src="/logo%20(1).png" alt="" className="college-footer__seal" />
               <span className="college-footer__name" id="college-footer-title">
                 {settings?.institutionName || 'Sri Aurobindo College of Education'}
               </span>

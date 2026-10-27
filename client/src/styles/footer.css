@@ -42,20 +42,11 @@
 }
 
 .college-footer__seal {
-  display: grid;
-  width: 54px;
-  height: 54px;
-  flex: 0 0 54px;
-  place-items: center;
-  border: 1px solid rgb(242 181 68 / 85%);
-  border-radius: 50%;
-  color: #f2b544;
-  background: rgb(101 25 23 / 45%);
-  box-shadow: inset 0 0 0 4px rgb(242 181 68 / 10%);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  object-fit: contain;
 }
 
 .college-footer__name {

@@ -1,17 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
-  Building2,
-  GraduationCap,
-  Play,
+  ChevronLeft,
+  ChevronRight,
   RotateCcw,
-  Star,
-  UsersRound,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EnquiryForm from '../components/EnquiryForm';
 import GalleryMosaic, { type GalleryItem } from '../components/GalleryMosaic';
 import { PageLayout } from '../components/Layout';
@@ -55,21 +52,52 @@ type HomeUpdate = {
   description?: string;
 };
 
-const heroContainerVariants = {
-  hidden: {},
-  visible: {
-    transition: { delayChildren: 0.1, staggerChildren: 0.1 },
+const heroSlides = [
+  {
+    image: '/hero1.png',
+    label: 'SRI AUROBINDO COLLEGE OF EDUCATION',
+    title: 'Shaping Future Educators, Inspiring Generations',
+    description: 'Discover quality teacher education that builds knowledge, confidence, professional skills, and a lifelong passion for teaching.',
+    primaryLabel: 'Explore Our Courses',
+    primaryTo: '/courses',
+    secondaryLabel: 'Contact Us',
+    secondaryTo: '/contact',
+    layout: 'left',
   },
-};
-
-const heroItemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.2, 0.7, 0.2, 1] },
+  {
+    image: '/hero2.png',
+    label: 'ACADEMIC EXCELLENCE',
+    title: 'Learn Today. Lead Tomorrow.',
+    description: 'Develop the teaching skills, educational knowledge, and professional values needed to make a meaningful difference in the classroom.',
+    primaryLabel: 'View Courses',
+    primaryTo: '/courses',
+    secondaryLabel: 'About Our College',
+    secondaryTo: '/about',
+    layout: 'right',
   },
-};
+  {
+    image: '/hero3.png',
+    label: 'B.Ed. & D.El.Ed. PROGRAMMES',
+    title: 'Your Journey to Becoming an Inspiring Teacher',
+    description: 'Build a strong foundation in educational psychology, classroom management, innovative teaching methods, and practical school experience.',
+    primaryLabel: 'Explore Programmes',
+    primaryTo: '/courses',
+    secondaryLabel: 'Enquire Now',
+    secondaryTo: '/contact',
+    layout: 'top',
+  },
+  {
+    image: '/hero4.png',
+    label: 'LEARN • GROW • INSPIRE',
+    title: 'A Community Dedicated to Educational Excellence',
+    description: 'Experience a supportive learning environment that encourages personal development, collaboration, creativity, and service to society.',
+    primaryLabel: 'Discover Campus Life',
+    primaryTo: '/campus',
+    secondaryLabel: 'Get in Touch',
+    secondaryTo: '/contact',
+    layout: 'right',
+  },
+] as const;
 
 const bentoContainerVariants = {
   hidden: {},
@@ -251,11 +279,32 @@ function UpdateFeed({
 
 export default function HomePage() {
   const reduceMotion = useReducedMotion();
+  const [activeHeroIndex, setActiveHeroIndex] = useState(0);
+  const [timerResetKey, setTimerResetKey] = useState(0);
   const coursesQuery = useOptionalContent<Course>('courses', 'public/courses');
   const eventsQuery = useOptionalContent<EventItem>('events', 'public/events');
   const noticesQuery = useOptionalContent<Notice>('notices', 'public/notices');
   const achievementsQuery = useOptionalContent<Achievement>('achievements', 'public/achievements');
   const galleryQuery = useOptionalContent<GalleryItem>('gallery', 'public/gallery');
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveHeroIndex((current) => (current + 1) % heroSlides.length);
+    }, 3000);
+    return () => window.clearInterval(timer);
+  }, [activeHeroIndex, timerResetKey]);
+
+  useEffect(() => {
+    heroSlides.forEach(({ image }) => {
+      const preloadedImage = new window.Image();
+      preloadedImage.src = image;
+    });
+  }, []);
+
+  const navigateToHero = (index: number) => {
+    setActiveHeroIndex(index);
+    setTimerResetKey((current) => current + 1);
+  };
 
   const revealProps = reduceMotion
     ? { initial: false as const }
@@ -286,74 +335,85 @@ export default function HomePage() {
   return (
     <PageLayout>
       <main className="home-page">
-        <section className="home-hero">
-          <div className="home-hero__inner">
-            <motion.div
-              className="home-hero__copy"
-              variants={heroContainerVariants}
-              initial={reduceMotion ? false : 'hidden'}
-              animate="visible"
-            >
-              <motion.p variants={heroItemVariants} className="home-hero__eyebrow">Education for a brighter tomorrow</motion.p>
-              <motion.h1 id="home-hero-title" variants={heroItemVariants}>
-                Sri Aurobindo College of <span>Education</span>
-              </motion.h1>
-              <motion.p variants={heroItemVariants} className="home-hero__description">
-                Empowering future educators with knowledge, values and a vision for a better tomorrow.
-              </motion.p>
-              <motion.div variants={heroItemVariants} className="home-hero__actions">
-                <Link to="/courses" className="button-primary">
-                  Explore Our Courses <ArrowRight size={16} aria-hidden="true" />
-                </Link>
-                <Link to="/campus" className="button-secondary">
-                  <span className="home-hero__play"><Play size={12} fill="currentColor" aria-hidden="true" /></span>
-                  Watch Campus Tour
-                </Link>
-              </motion.div>
-              <motion.ul variants={heroItemVariants} className="home-hero__features" aria-label="College highlights">
-                {[
-                  { icon: <GraduationCap size={22} aria-hidden="true" />, label: 'Quality Education' },
-                  { icon: <UsersRound size={22} aria-hidden="true" />, label: 'Experienced Faculty' },
-                  { icon: <Building2 size={22} aria-hidden="true" />, label: 'Modern Campus' },
-                  { icon: <Star size={22} fill="currentColor" aria-hidden="true" />, label: 'Holistic Development' },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <span className="home-hero__feature-icon">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </li>
-                ))}
-              </motion.ul>
-            </motion.div>
-
-            <motion.div
-              className="home-hero__media"
-              initial={reduceMotion ? false : 'hidden'}
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0, scale: 1.04 },
-                visible: {
-                  opacity: 1,
-                  scale: 1,
-                  transition: { duration: 0.9, delay: reduceMotion ? 0 : 0.35, ease: [0.2, 0.7, 0.2, 1] },
-                },
-              }}
-            >
-              <figure className="home-hero__photo">
-                <img
-                  src={campusImages.infrastructure}
-                  alt="Sri Aurobindo College of Education building exterior"
-                  width="900"
-                  height="900"
-                />
-              </figure>
-            </motion.div>
+        <section
+          className={`home-hero home-hero--slide-${activeHeroIndex + 1}`}
+          aria-label="Featured college information"
+          aria-roledescription="carousel"
+        >
+          <div className="home-hero__slides" aria-hidden="true">
+            {heroSlides.map((slide, index) => (
+              <motion.img
+                key={slide.image}
+                className={`home-hero__image home-hero__image--${index + 1}`}
+                src={slide.image}
+                alt=""
+                loading="eager"
+                initial={false}
+                animate={{
+                  opacity: activeHeroIndex === index ? 1 : 0,
+                  x: activeHeroIndex === index ? 0 : (index < activeHeroIndex ? -18 : 18),
+                }}
+                transition={{ duration: reduceMotion ? 0 : 0.9, ease: [0.2, 0.7, 0.2, 1] }}
+              />
+            ))}
           </div>
-          <svg className="home-hero__accent-curve" viewBox="0 0 1000 800" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M560 0 C560 170 505 245 505 405 C505 580 545 675 590 735" />
-          </svg>
-          <svg className="home-hero__wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M0 48 C150 4 260 90 440 82 C620 74 690 42 850 44 C1040 47 1120 84 1280 68 C1350 61 1400 39 1440 48 L1440 100 L0 100 Z" />
-          </svg>
+          <div className="home-hero__shade" aria-hidden="true" />
+          <div className="home-hero__inner">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeHeroIndex}
+                className={`home-hero__copy home-hero__copy--${heroSlides[activeHeroIndex].layout}`}
+                initial={reduceMotion ? false : { opacity: 0, marginTop: 14 }}
+                animate={{ opacity: 1, marginTop: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, marginTop: -8 }}
+                transition={{ duration: reduceMotion ? 0 : 0.45, ease: 'easeOut' }}
+                aria-roledescription="slide"
+                aria-label={`${activeHeroIndex + 1} of ${heroSlides.length}`}
+              >
+                <p className="home-hero__eyebrow">{heroSlides[activeHeroIndex].label}</p>
+                <h1 id="home-hero-title">{heroSlides[activeHeroIndex].title}</h1>
+                <p className="home-hero__description">{heroSlides[activeHeroIndex].description}</p>
+                <div className="home-hero__actions">
+                  <Link to={heroSlides[activeHeroIndex].primaryTo} className="button-primary">
+                    {heroSlides[activeHeroIndex].primaryLabel} <ArrowRight size={16} aria-hidden="true" />
+                  </Link>
+                  <Link to={heroSlides[activeHeroIndex].secondaryTo} className="button-secondary">
+                    {heroSlides[activeHeroIndex].secondaryLabel}
+                  </Link>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="home-hero__controls">
+            <button
+              type="button"
+              className="home-hero__arrow"
+              aria-label="Previous slide"
+              onClick={() => navigateToHero((activeHeroIndex - 1 + heroSlides.length) % heroSlides.length)}
+            >
+              <ChevronLeft size={20} aria-hidden="true" />
+            </button>
+            <div className="home-hero__pagination" aria-label="Choose a slide">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.label}
+                  type="button"
+                  className={`home-hero__dot${activeHeroIndex === index ? ' is-active' : ''}`}
+                  aria-label={`Go to slide ${index + 1}: ${slide.label}`}
+                  aria-current={activeHeroIndex === index ? 'true' : undefined}
+                  onClick={() => navigateToHero(index)}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              className="home-hero__arrow"
+              aria-label="Next slide"
+              onClick={() => navigateToHero((activeHeroIndex + 1) % heroSlides.length)}
+            >
+              <ChevronRight size={20} aria-hidden="true" />
+            </button>
+          </div>
         </section>
 
         <section className="home-section home-highlights">
