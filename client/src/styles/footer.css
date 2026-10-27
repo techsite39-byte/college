@@ -1,0 +1,425 @@
+.college-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff7ed;
+  background: linear-gradient(115deg, #7b211f 0%, #711c1b 56%, #651917 100%);
+}
+
+.college-footer__wave {
+  position: absolute;
+  z-index: 0;
+  top: -88px;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 90px;
+  overflow: visible;
+  fill: #7b211f;
+  pointer-events: none;
+}
+
+.college-footer__main {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.03fr) minmax(280px, 1.08fr) minmax(230px, 0.78fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 58px);
+  padding-block: 90px 60px;
+}
+
+.college-footer__brand {
+  min-width: 0;
+}
+
+.college-footer__identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.college-footer__seal {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  place-items: center;
+  border: 1px solid rgb(242 181 68 / 85%);
+  border-radius: 50%;
+  color: #f2b544;
+  background: rgb(101 25 23 / 45%);
+  box-shadow: inset 0 0 0 4px rgb(242 181 68 / 10%);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.college-footer__name {
+  max-width: 300px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 1.55vw, 1.42rem);
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+.college-footer__tagline {
+  margin: 25px 0 0;
+  color: #f2b544;
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  font-weight: 650;
+  line-height: 1.48;
+}
+
+.college-footer__description {
+  max-width: 440px;
+  margin: 14px 0 0;
+  color: rgb(255 247 237 / 82%);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.college-footer__cta {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 26px;
+  padding: 0 21px;
+  border: 1px solid #f2b544;
+  border-radius: 999px;
+  color: #451614;
+  background: #f2b544;
+  box-shadow: 0 8px 22px rgb(32 8 7 / 20%);
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: transform 220ms var(--ease-standard), background-color 220ms var(--ease-standard), box-shadow 220ms var(--ease-standard);
+}
+
+.college-footer__cta:hover {
+  transform: translateY(-2px);
+  background: #ffca69;
+  box-shadow: 0 12px 28px rgb(32 8 7 / 25%);
+}
+
+.college-footer__cta:focus-visible,
+.college-footer__identity:focus-visible,
+.college-footer a:focus-visible {
+  outline: 3px solid #f2b544;
+  outline-offset: 4px;
+}
+
+.college-footer__photo {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  transform: rotate(-2deg);
+  animation: college-footer-photo-float 8s ease-in-out infinite;
+}
+
+.college-footer__photo::before,
+.college-footer__photo::after {
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgb(242 181 68 / 47%);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.college-footer__photo::before {
+  inset: -18px 8% 13px -15px;
+}
+
+.college-footer__photo::after {
+  inset: 6px -13px -16px 12%;
+  border-color: rgb(255 247 237 / 22%);
+}
+
+.college-footer__photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.24;
+  border: 5px solid rgb(255 247 237 / 92%);
+  border-radius: 22px;
+  background: #651917;
+  box-shadow: 0 24px 48px rgb(35 8 7 / 33%);
+  object-fit: cover;
+}
+
+.college-footer__photo figcaption {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  padding: 10px 13px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 12px;
+  color: white;
+  background: rgb(69 22 20 / 78%);
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.45;
+  backdrop-filter: blur(8px);
+}
+
+.college-footer__ornament {
+  position: absolute;
+  top: 27%;
+  right: max(17%, calc((100% - 1228px) / 2 + 320px));
+  z-index: 0;
+  display: grid;
+  width: 54px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  transform: rotate(-14deg);
+  opacity: 0.7;
+}
+
+.college-footer__ornament span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #f2b544;
+}
+
+.college-footer__ornament span:nth-child(3n + 2) {
+  opacity: 0.55;
+}
+
+.college-footer__details {
+  display: grid;
+  gap: 34px;
+  align-content: center;
+}
+
+.college-footer__links h2,
+.college-footer__contact h2 {
+  margin: 0;
+  color: #f2b544;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.college-footer__links ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px 16px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.college-footer__links a,
+.college-footer__contact a,
+.college-footer__bottom a {
+  color: rgb(255 247 237 / 82%);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.college-footer__links a {
+  position: relative;
+  display: inline-block;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.college-footer__links a::after {
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  left: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: #f2b544;
+  content: "";
+  transition: transform 180ms ease;
+}
+
+.college-footer__links a:hover,
+.college-footer__contact a:hover,
+.college-footer__bottom a:hover {
+  color: #f2b544;
+}
+
+.college-footer__links a:hover::after {
+  transform: scaleX(1);
+}
+
+.college-footer__contact {
+  display: grid;
+  gap: 12px;
+}
+
+.college-footer__contact h2 {
+  margin-bottom: 3px;
+}
+
+.college-footer__contact p {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  color: rgb(255 247 237 / 82%);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.college-footer__contact p svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #f2b544;
+}
+
+.college-footer__contact-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  margin-top: 2px;
+  color: #f2b544 !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.college-footer__bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 66px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-top: 1px solid rgb(255 247 237 / 18%);
+  color: rgb(255 247 237 / 65%);
+  font-size: 0.75rem;
+}
+
+.college-footer__bottom p {
+  margin: 0;
+}
+
+.college-footer__bottom > div {
+  display: flex;
+  gap: 22px;
+}
+
+@keyframes college-footer-photo-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-7px) rotate(-1deg); }
+}
+
+@media (max-width: 1023px) {
+  .college-footer__main {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.85fr);
+    gap: 42px;
+    padding-top: 78px;
+  }
+
+  .college-footer__photo {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .college-footer__details {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.8fr);
+    align-items: start;
+    gap: 40px;
+    padding-top: 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .college-footer__wave {
+    top: -55px;
+    height: 57px;
+  }
+
+  .college-footer__main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+    padding-top: 62px;
+    padding-bottom: 36px;
+  }
+
+  .college-footer__name {
+    font-size: 1.1rem;
+  }
+
+  .college-footer__tagline {
+    max-width: 340px;
+    margin-top: 20px;
+    font-size: 1.12rem;
+  }
+
+  .college-footer__description {
+    font-size: 0.86rem;
+  }
+
+  .college-footer__photo {
+    grid-column: auto;
+    grid-row: auto;
+    width: min(100% - 14px, 440px);
+    justify-self: center;
+  }
+
+  .college-footer__photo img {
+    aspect-ratio: 1.35;
+    border-radius: 18px;
+  }
+
+  .college-footer__details {
+    grid-column: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    padding-top: 0;
+  }
+
+  .college-footer__links ul {
+    max-width: 380px;
+  }
+
+  .college-footer__ornament {
+    top: 42%;
+    right: 8%;
+    opacity: 0.4;
+  }
+
+  .college-footer__bottom {
+    min-height: 74px;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding-block: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .college-footer__photo {
+    animation: none;
+  }
+
+  .college-footer__cta,
+  .college-footer__links a,
+  .college-footer__links a::after,
+  .college-footer__contact a,
+  .college-footer__bottom a {
+    transition: none;
+  }
+}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://www.sriaurobindocoe.org.in/sitemap.xml
